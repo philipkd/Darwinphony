@@ -73,9 +73,10 @@ package
 				if (Input.mouseDown) {
 					FP.world.remove(this);
 				}
-				
-				
+			
 			}
+			
+			
 					
 			graphic.visible = true;
 
@@ -94,8 +95,7 @@ package
 			subs_x = 1;
 			subs_y = 4;
 			
-			cos_x = Math.random() < .5;
-			cos_y = Math.random() < .5;
+			cos_y = true;
 	
 			
 		}

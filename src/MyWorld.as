@@ -27,7 +27,7 @@ package
 			darwin.y = FP.screen.height - darwin.halfHeight;
 			add(darwin); 
 			add(new Creature(true)); 
-			
+			add(new Finch);
 			super.begin();
 		}
 		
