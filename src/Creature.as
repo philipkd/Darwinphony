@@ -84,21 +84,19 @@ package
 		public function seed():void {
 			
 			initial_x = FP.screen.width * .25 + Math.random() * FP.screen.width * .5;
-			initial_y = FP.screen.height * .25 + Math.random() * FP.screen.height * .5;
+			initial_y = FP.screen.height * .5;
 			
 			frames.frame = Math.random() * frames.frameCount;
 			
-			amp_x = Math.min(initial_x, FP.screen.width - initial_x) * Math.random() * .5;
-			amp_y = Math.min(initial_y, FP.screen.height - initial_y)  * Math.random() * .5;
+			amp_x = 0;
+			amp_y = 50;
 
-			subs_x = int(Math.random() * 5 + 1);
-			subs_y = int(Math.random() * 5 + 1);
+			subs_x = 1;
+			subs_y = 4;
 			
 			cos_x = Math.random() < .5;
 			cos_y = Math.random() < .5;
-			
-			amp_y = 50;
-			amp_x = 0;
+	
 			
 		}
 			
@@ -113,13 +111,16 @@ package
 
 			frames.frame = row * frames.columns + col;
 					
-			initial_x += MyWorld.norm() * 36 - 18;
+			initial_x += MyWorld.norm() * 50 - 25;
+
+			if (initial_x < 20)
+				initial_x = 20;
+			else if (initial_x > FP.screen.width - 20)
+				initial_x = FP.screen.width - 20;
+
+			
 //			initial_y += MyWorld.norm() * 36 - 18;
 //			
-//			if (initial_x < 20)
-//				initial_x = 20;
-//			else if (initial_x > FP.screen.width - 20)
-//				initial_x = FP.screen.width - 20;
 //			
 //			if (initial_y < 16)
 //				initial_y = 16;
