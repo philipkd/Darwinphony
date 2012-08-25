@@ -14,32 +14,40 @@ package
 	public class Creature extends Entity
 	{
 		[Embed(source = 'assets/creature-1.png')] private static const CREATURE_1:Class;
-		
-		private static const spm:Number = 4; // seconds per measure;
-		private static const maxv:Number = 300; // max pixels per second;
-		private static const maxa:Number = maxv; // max acceleration (i.e. one second to reach maximum velocity)
-		
-		private var ax:Array;
-		private var ay:Array;
-		private var vx:Number = 0;
-		private var vy:Number = 0;
+				
+		private static const cycle_length:Number = 4;
+
+		public var amp_x:Number;
+		public var amp_y:Number;
+
+		private var cos_x:Boolean;
+		private var cos_y:Boolean;
+		private var subs_x:Number;
+		private var subs_y:Number;
 		
 		private var timer:Number = 0;
-				
+			
+		private var initial_x:Number;
+		private var initial_y:Number;		
+		
 		private static var player:Creature;
-		
-		
+				
 		public function Creature(x:Number=0, y:Number=0, graphic:Graphic=null, mask:Mask=null)
 		{
-			
-			ax = new Array(spm); 
-			ay = new Array(spm);
-			for (var i:int = 0; i < spm; i++) {
-				ax[i] = Math.random() * maxa * 2 - maxa;
-				ay[i] = Math.random() * maxa * 2 - maxa;
-			}
-						
 			var img:Image = new Image(CREATURE_1);
+						
+			initial_x = x;
+			initial_y = y;
+			
+			amp_x = FP.screen.width * Math.random() / 2.0;
+			amp_y = FP.screen.height * Math.random() / 2.0;
+			
+			subs_x = Math.random() * 5;
+			subs_y = Math.random() * 5;
+			
+			
+			cos_x = Math.random() < .5;
+			cos_y = Math.random() < .5;
 			
 			graphic = img;
 			mask = new Pixelmask(CREATURE_1, -img.width / 2.0, -img.height / 2.0); 
@@ -48,61 +56,36 @@ package
 			
 			player = this;
 			type = 'creature';
+
+			
+			subs_x = 1;
+			subs_y = 1;
+			
+			graphic.visible = false;
 			
 			super(x, y, graphic, mask);			
 		}
 		
 		public override function update():void {
-						
-			var cx:Number = x;
-			var cy:Number = y;
-			
+									
 			timer += FP.elapsed;			
-			if (timer > spm)
-				timer -= spm;
-			
-			
-			for (var i:int = 0; i < spm; i++) {
-				if (timer > i && timer < (i + 1)) {
-					vx += ax[i] * FP.elapsed;
-					vy += ay[i] * FP.elapsed;
-				}
-			}
+			if (timer > cycle_length)
+				timer -= cycle_length;
 
-			if (vx > maxv)
-				vx = maxv;
-			else if (vx < -maxv)
-				vx = -maxv;
+			if (cos_x)
+				x = amp_x * Math.cos(2 * Math.PI * (timer / cycle_length) / subs_x) + initial_x; 
+			else
+				x = amp_x * Math.sin(2 * Math.PI * (timer / cycle_length) / subs_x) + initial_x;
 			
-			if (vy > maxv)
-				vy = maxv;
-			else if (vy < -maxv)
-				vy = -maxv;
+			if (cos_y)
+				y = amp_y * Math.cos(2 * Math.PI * (timer / cycle_length) / subs_y) + initial_y; 
+			else
+				y = amp_y * Math.sin(2 * Math.PI * (timer / cycle_length) / subs_y) + initial_y;
 			
-			cx += vx * FP.elapsed;
-			cy += vy * FP.elapsed;
+					
+			graphic.visible = true;
+
 			
-			
-			// reflect over edges
-			
-			if (cx < 0) {
-				cx *= -1;
-				vx *= -1;
-			} else if (cx > FP.screen.width) {
-				cx = FP.screen.width - (cx - FP.screen.width);
-				vx *= -1;
-			}
-			
-			if (cy < 0) {
-				cy *= -1;
-				vy *= -1;
-			} else if (cy > FP.screen.height) {
-				cy = FP.screen.height - (cy - FP.screen.height);
-				vy *= -1;
-			}
-			
-			x = cx;
-			y = cy;
 		}
 	}
 }

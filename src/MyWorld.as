@@ -19,7 +19,7 @@ package
 		}
 		
 		public function addCreature():void {
-			add(new Creature((FP.screen.width - 50) * Math.random() + 25, (FP.screen.height - 50) * Math.random() + 25)); 
+			add(new Creature(FP.screen.width / 2, FP.screen.height / 2)); 
 						
 		}
 		

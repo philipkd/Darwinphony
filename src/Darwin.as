@@ -16,7 +16,7 @@ package
 		
 		private var darwin_cane:Image = new Image(DARWIN_CANE);
 		private var darwin_cane_mask:Pixelmask = new Pixelmask(DARWIN_CANE);
-		
+				
 		public function Darwin(x:Number=0, y:Number=0, graphic:Graphic=null, mask:Mask=null)
 		{
 			
