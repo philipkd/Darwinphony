@@ -90,12 +90,15 @@ package
 			
 			amp_x = Math.min(initial_x, FP.screen.width - initial_x) * Math.random() * .5;
 			amp_y = Math.min(initial_y, FP.screen.height - initial_y)  * Math.random() * .5;
-			
+
 			subs_x = int(Math.random() * 5 + 1);
 			subs_y = int(Math.random() * 5 + 1);
 			
 			cos_x = Math.random() < .5;
 			cos_y = Math.random() < .5;
+			
+			amp_y = 50;
+			amp_x = 0;
 			
 		}
 	
@@ -104,15 +107,15 @@ package
 			var row:uint = frames.frame / frames.rows;
 			var col:uint = frames.frame % frames.columns;
 			
-			if (Math.random() < .2)
+			if (Math.random() < .05)
 				col = Math.random() * frames.columns;
-			if (Math.random() < .2)
+			if (Math.random() < .05)
 				row = Math.random() * frames.rows;
 
 			frames.frame = row * frames.columns + col;
 					
-			initial_x += Math.random() * 36 - 18;
-			initial_y += Math.random() * 36 - 18;
+			initial_x += MyWorld.norm() * 36 - 18;
+			initial_y += MyWorld.norm() * 36 - 18;
 			
 			if (initial_x < 20)
 				initial_x = 20;
@@ -124,31 +127,15 @@ package
 			else if (initial_y > FP.screen.height - 16)
 				initial_y = FP.screen.height - 16;
 			
-			if (amp_x >= FP.screen.width * .5) {
-				amp_x *= Math.random() * .5;
-			} else {
-				if (Math.random() < .5) {
-					amp_x *= Math.random() * .5;
-				} else {
-					amp_x *= Math.random() * .5;
-					if (amp_x < frames.width)
-						amp_x = frames.width;
-				}
-			}
+
 			
-			if (amp_y >= FP.screen.height * .5) {
-				amp_y *= Math.random() * .5;
-			} else {
-				if (Math.random() < .5) {
-					amp_y *= (1 - Math.random() * .5);
-				} else {
-					amp_y *= (1 + Math.random());
-					if (amp_y < frames.height)
-						amp_y = frames.height;
-					else if (amp_y >= FP.screen.height * .5)
-						amp_y = FP.screen.height * .5;
-				}
-			}
+			amp_y += MyWorld.norm() * 48 - 24;
+			
+			if (amp_y >= FP.screen.height * .5)
+				amp_y = FP.screen.height * .5;
+			else if (amp_y < 0)
+				amp_y = 0;
+			
 
 			if (subs_x == 4) {
 				subs_x += -1 * int(Math.random() * 3);
