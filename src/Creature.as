@@ -142,7 +142,7 @@ package
 				if (Math.random() < .5) {
 					amp_y *= (1 - Math.random() * .5);
 				} else {
-					amp_y *= 1 + Math.random();
+					amp_y *= (1 + Math.random());
 					if (amp_y < frames.height)
 						amp_y = frames.height;
 					else if (amp_y >= FP.screen.height * .5)
@@ -201,7 +201,6 @@ package
 			MyWorld.current.add(baby);
 			
 			baby.mutate();
-			this.mutate();
 		}
 	}
 }
