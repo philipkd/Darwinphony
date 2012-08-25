@@ -30,5 +30,14 @@ package
 			
 			super.begin();
 		}
+		
+		public function reset():void {
+			var creatures:Array = new Array();
+			FP.world.getType('creature',creatures);
+			for each (var creature:Creature in creatures)
+				remove(creature);
+			
+			add(new Creature(true)); 			
+		}
 	}
 }

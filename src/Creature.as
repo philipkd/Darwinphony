@@ -103,9 +103,9 @@ package
 			var row:uint = frames.frame / frames.rows;
 			var col:uint = frames.frame % frames.columns;
 			
-			if (Math.random() < .4)
+			if (Math.random() < .2)
 				col = Math.random() * frames.columns;
-			if (Math.random() < .4)
+			if (Math.random() < .2)
 				row = Math.random() * frames.rows;
 
 			frames.frame = row * frames.columns + col;
@@ -124,19 +124,27 @@ package
 				initial_y = FP.screen.height - 16;
 			
 			if (amp_x >= FP.screen.width * .5) {
-				amp_x *= Math.random() * .4 + .6;
+				amp_x *= Math.random() * .5;
 			} else {
-				amp_x *= Math.random() * .4 + .8;
-				if (amp_x > FP.screen.width * .5)
-					amp_x = FP.screen.width * .5;
+				if (Math.random() < .5) {
+					amp_x *= Math.random() * .5;
+				} else {
+					amp_x *= Math.random() * .5;
+					if (amp_x < frames.width)
+						amp_x = frames.width;
+				}
 			}
 			
-			if (amp_y == FP.screen.width * .5) {
-				amp_y *= Math.random() * .4 + .6;
+			if (amp_y >= FP.screen.height * .5) {
+				amp_y *= Math.random() * .5;
 			} else {
-				amp_y *= Math.random() * .4 + .8;
-				if (amp_y > FP.screen.height * .5)
-					amp_y = FP.screen.height * .5;
+				if (Math.random() < .5) {
+					amp_y *= Math.random() * .5;
+				} else {
+					amp_y *= Math.random() * .5;
+					if (amp_y < frames.height)
+						amp_y = frames.height;
+				}
 			}
 
 			if (subs_x == 4) {

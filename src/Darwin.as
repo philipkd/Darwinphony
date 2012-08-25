@@ -56,11 +56,19 @@ package
 			if (Input.pressed(Key.SPACE)) {
 				var creatures:Array = new Array();
 				FP.world.getType('creature',creatures);
-				trace(creatures.length);
-				for each (var creature:Creature in creatures) {
+				var i:int = Math.random() * creatures.length;
+				if (creatures.length > 0) {
+					var creature:Creature = creatures[i];
 					creature.divide();
+				} else {
+					MyWorld.current.reset();
 				}
 				
+				
+			}
+			
+			if (Input.pressed(Key.R)) {
+				MyWorld.current.reset();
 			}
 		}
 		
