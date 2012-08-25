@@ -98,6 +98,7 @@ package
 			cos_y = Math.random() < .5;
 			
 		}
+	
 		
 		public function mutate():void {
 			var row:uint = frames.frame / frames.rows;
@@ -139,11 +140,13 @@ package
 				amp_y *= Math.random() * .5;
 			} else {
 				if (Math.random() < .5) {
-					amp_y *= Math.random() * .5;
+					amp_y *= (1 - Math.random() * .5);
 				} else {
-					amp_y *= Math.random() * .5;
+					amp_y *= 1 + Math.random();
 					if (amp_y < frames.height)
 						amp_y = frames.height;
+					else if (amp_y >= FP.screen.height * .5)
+						amp_y = FP.screen.height * .5;
 				}
 			}
 
