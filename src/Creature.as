@@ -15,7 +15,7 @@ package
 	{
 		[Embed(source = 'assets/creature-1.png')] private static const CREATURE_1:Class;
 				
-		private static const cycle_length:Number = 4;
+		private static const cycle_length:Number = 8;
 
 		public var amp_x:Number;
 		public var amp_y:Number;
@@ -42,8 +42,8 @@ package
 			amp_x = FP.screen.width * Math.random() / 2.0;
 			amp_y = FP.screen.height * Math.random() / 2.0;
 			
-			subs_x = Math.random() * 5;
-			subs_y = Math.random() * 5;
+			subs_x = int(Math.random() * 5 + 1);
+			subs_y = int(Math.random() * 5 + 1);
 			
 			
 			cos_x = Math.random() < .5;
@@ -56,11 +56,7 @@ package
 			
 			player = this;
 			type = 'creature';
-
-			
-			subs_x = 1;
-			subs_y = 1;
-			
+						
 			graphic.visible = false;
 			
 			super(x, y, graphic, mask);			
@@ -73,15 +69,19 @@ package
 				timer -= cycle_length;
 
 			if (cos_x)
-				x = amp_x * Math.cos(2 * Math.PI * (timer / cycle_length) / subs_x) + initial_x; 
+				x = amp_x * Math.cos(2 * Math.PI * (timer / cycle_length) * subs_x) + initial_x; 
 			else
-				x = amp_x * Math.sin(2 * Math.PI * (timer / cycle_length) / subs_x) + initial_x;
+				x = amp_x * Math.sin(2 * Math.PI * (timer / cycle_length) * subs_x) + initial_x;
 			
 			if (cos_y)
-				y = amp_y * Math.cos(2 * Math.PI * (timer / cycle_length) / subs_y) + initial_y; 
+				y = amp_y * Math.cos(2 * Math.PI * (timer / cycle_length) * subs_y) + initial_y; 
 			else
-				y = amp_y * Math.sin(2 * Math.PI * (timer / cycle_length) / subs_y) + initial_y;
+				y = amp_y * Math.sin(2 * Math.PI * (timer / cycle_length) * subs_y) + initial_y;
+
 			
+			if (collidePoint(x,y,Input.mouseX, Input.mouseY)) {
+				trace(subs_x);
+			}
 					
 			graphic.visible = true;
 
