@@ -15,13 +15,9 @@ package
 		public function MyWorld()
 		{
 			super();
-			current = this;
+			current = this;			
 		}
 		
-		public function addCreature():void {
-			add(new Creature(FP.screen.width / 2, FP.screen.height / 2)); 
-						
-		}
 		
 		public override function begin():void {
 			add(new Entity(0,0,new Image(MAP)));
@@ -30,6 +26,7 @@ package
 			darwin.x = darwin.halfWidth;
 			darwin.y = FP.screen.height - darwin.halfHeight;
 			add(darwin); 
+			add(new Creature(true)); 
 			
 			super.begin();
 		}

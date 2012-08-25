@@ -54,7 +54,13 @@ package
 			}
 				
 			if (Input.pressed(Key.SPACE)) {
-				MyWorld.current.addCreature();
+				var creatures:Array = new Array();
+				FP.world.getType('creature',creatures);
+				trace(creatures.length);
+				for each (var creature:Creature in creatures) {
+					creature.divide();
+				}
+				
 			}
 		}
 		
