@@ -56,10 +56,20 @@ package
 			if (Input.pressed(Key.SPACE)) {
 				var creatures:Array = new Array();
 				FP.world.getType('creature',creatures);
-				var i:int = Math.random() * creatures.length;
-				if (creatures.length > 0) {
-					var creature:Creature = creatures[i];
-					creature.divide();
+				if (creatures.length > 1) {
+					var nearestDist:Number = FP.distance(Input.mouseX, Input.mouseY, creatures[0].x, creatures[0].y);
+					var nearest:Creature = creatures[0];
+					
+					for each (var creature:Creature in creatures) {
+						var dist:Number = FP.distance(Input.mouseX, Input.mouseY, creature.x, creature.y);
+						if (dist < nearestDist) {
+							nearestDist = dist;
+							nearest = creature;
+						}
+					}
+					nearest.divide();
+				} else if (creatures.length > 0) {
+					creatures[0].divide();
 				} else {
 					MyWorld.current.reset();
 				}
