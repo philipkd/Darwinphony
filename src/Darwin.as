@@ -53,7 +53,7 @@ package
 				mask = darwin_mask;
 			}
 				
-			if (Input.pressed(Key.SPACE)) {
+			if (Input.check(Key.SPACE)) {
 				var creatures:Array = new Array();
 				FP.world.getType('creature',creatures);
 				if (creatures.length > 1) {
