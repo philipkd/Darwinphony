@@ -3,10 +3,10 @@ package
 	import net.flashpunk.Entity;
 	import net.flashpunk.Graphic;
 	import net.flashpunk.Mask;
-	import net.flashpunk.utils.*;
 	import net.flashpunk.graphics.*;
 	import net.flashpunk.graphics.Text;
 	import net.flashpunk.masks.Hitbox;
+	import net.flashpunk.utils.*;
 	
 	public class Trash extends Entity
 	{
@@ -20,6 +20,8 @@ package
 			img.x = -img.width * .5;
 			img.y = -img.height * .5;
 
+			type = 'menu';
+			
 			mask = new Hitbox(img.width, img.height, img.x, img.y);
 			
 			text = new Text('8');
@@ -38,6 +40,7 @@ package
 		
 		public override function update():void {
 			var hover:Boolean = collidePoint(x,y,Input.mouseX,Input.mouseY);
+
 			if (hover) {
 				img.alpha = 1;
 				text.visible = true;

@@ -37,7 +37,8 @@ package
 				x = Input.mouseX;
 				y = Input.mouseY;
 				graphic = img;
-			} else {				
+			} else {
+				type = 'menu'
 				mask = new Hitbox(img.width,img.height,img.x,img.y);
 				text = new Text('1');
 				text.centerOO();
@@ -87,7 +88,7 @@ package
 				
 				text.visible = hover;
 				
-				if (Input.pressed(Key.DIGIT_1) || (hover && Map.current.cursor() != this)) {
+				if (Input.pressed(Key.DIGIT_1) || (hover && Map.current.cursor() != this && Map.current.ready)) {
 					Map.current.clear_cursor();
 					FP.world.add(new Finch(FINCH_TYPE_CURSOR));
 				}

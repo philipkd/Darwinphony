@@ -32,6 +32,7 @@ package
 				y = Input.mouseY;
 				graphic = img;
 			} else {
+				type = 'menu';
 				text = new Text('3');
 				text.centerOO();
 				text.y = -10;
@@ -46,7 +47,7 @@ package
 				x = Input.mouseX;
 				y = Input.mouseY;
 				
-				if (Input.mouseDown && !Darwin.current.hover) {
+				if (Input.mouseDown && !Map.current.menuHover() && Map.current.ready) {
 
 					var creatures:Array = new Array();
 					FP.world.getType('creature',creatures);

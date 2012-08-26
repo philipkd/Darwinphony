@@ -3,7 +3,8 @@ package
 	import flash.display.Bitmap;
 	
 	import net.flashpunk.*;
-	import net.flashpunk.graphics.Image;
+	import net.flashpunk.graphics.*;
+	import net.flashpunk.utils.*;
 	
 	public class Map extends World
 	{
@@ -12,7 +13,11 @@ package
 		public static const LAYER_MAP:int = 5;
 		public static const LAYER_TURTLES:int = 4;
 		public static const LAYER_KRILL:int = 3;
+		
+		public var ready:Boolean = false;
 
+		private var began:Boolean;
+		
 		private var _map:*;
 		private var _creatures:*;
 		private var _initial_turtle_x:Number;
@@ -31,51 +36,59 @@ package
 		
 		
 		public override function begin():void {
-			var map:Entity = new Entity(0,0,new Image(_map));
-			map.layer = 5;
-			add(map);
-						
-			var darwin:Darwin = new Darwin();
-			darwin.x = 16
-			darwin.y = 133;
-			add(darwin); 
+			if (!began) {
+				var map:Entity = new Entity(0,0,new Image(_map));
+				map.layer = 5;
+				add(map);
+							
+				var darwin:Darwin = new Darwin();
+				darwin.x = 16
+				darwin.y = 133;
+				add(darwin); 
+				
+				add(new Creature(_creatures, true)); 
+				
+				var finch:Finch = new Finch(Finch.FINCH_TYPE_INERT);
+				finch.x = 49;
+				finch.y = 134;
+				add(finch);
+				
+				var spawner:Spawner = new Spawner(Spawner.SPAWN_TYPE_INERT);
+				spawner.x = 78;
+				spawner.y = 145;
+				add(spawner);
+				
+				var turtle:Turtle = new Turtle(Turtle.TURTLE_TYPE_MENU);
+				turtle.x = 61;
+				turtle.y = 144;
+				add(turtle);
+				
+				add(new Spawner(Spawner.SPAWN_TYPE_CURSOR));
+				
+				if (_initial_turtle_x != -1) {
+					var beginner:Turtle = new Turtle(Turtle.TURTLE_TYPE_LAND);
+					beginner.x = _initial_turtle_x;
+					beginner.y = _initial_turtle_y;
+					add(beginner);
+				}
 			
-			add(new Creature(_creatures, true)); 
-			
-			var finch:Finch = new Finch(Finch.FINCH_TYPE_INERT);
-			finch.x = 49;
-			finch.y = 134;
-			add(finch);
-			
-			var spawner:Spawner = new Spawner(Spawner.SPAWN_TYPE_INERT);
-			spawner.x = 78;
-			spawner.y = 145;
-			add(spawner);
-			
-			var turtle:Turtle = new Turtle(Turtle.TURTLE_TYPE_MENU);
-			turtle.x = 61;
-			turtle.y = 144;
-			add(turtle);
-			
-			add(new Spawner(Spawner.SPAWN_TYPE_CURSOR));
-			
-			if (_initial_turtle_x != -1) {
-				var beginner:Turtle = new Turtle(Turtle.TURTLE_TYPE_LAND);
-				beginner.x = _initial_turtle_x;
-				beginner.y = _initial_turtle_y;
-				add(beginner);
+				add(new Trash);
 			}
-		
-			add(new Trash);
 			
 			super.begin();
 		}
+	
 		
 		public function reset():void {
 			var creatures:Array = new Array();
 			FP.world.getType('creature',creatures);
 			for each (var creature:Creature in creatures)
 				remove(creature);
+
+			var turtles:Array = new Array();
+			FP.world.getType('turtles',creatures);
+			for each (var turtle:Turtle in turtles)
+				remove(turtle);
 			
 			add(new Creature(_creatures, true)); 			
 		}
@@ -96,9 +109,27 @@ package
 			}
 		}
 		
+		public function menuHover():Boolean {
+			var e:Entity = collidePoint('menu',Input.mouseX, Input.mouseY);
+			if (e)
+				return true;
+			else
+				return false;
+		}
+		
+		
+		
+		public override function update():void {
+			if (Input.mouseUp)
+				ready = true;
+			
+			super.update();
+		}
+		
 		public function select():void {
 			current = this;
 			FP.world = this;
+			ready = false;
 		}
 		
 		public static function norm():Number {

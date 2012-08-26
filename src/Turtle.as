@@ -48,6 +48,7 @@ package
 				img.alpha = .5;			
 				graphic = img;
 			} else {
+				type = 'menu';
 				text = new Text('2');
 				text.centerOO();
 				text.y = -13;
@@ -109,7 +110,7 @@ package
 			
 			if (turtle_type == TURTLE_TYPE_CURSOR) {
 				
-				if (Input.mousePressed && !Darwin.current.hover) {
+				if (Input.mousePressed && !Map.current.menuHover() && Map.current.ready) {
 					drop_copy();
 				}
 				

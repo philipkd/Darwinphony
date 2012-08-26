@@ -23,7 +23,7 @@ package
 		public function Darwin(x:Number=0, y:Number=0, graphic:Graphic=null, mask:Mask=null)
 		{
 			
-			type = 'darwin';
+			type = 'menu';
 			layer = -1;
 	
 			darwin.x = -darwin.width * .5;
