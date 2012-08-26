@@ -60,20 +60,30 @@ package
 					var creatures:Array = new Array();
 					FP.world.getType('creature',creatures);
 					if (creatures.length > 1) {
-						var nearestDist:Number = FP.distance(Input.mouseX, Input.mouseY, creatures[0].x, creatures[0].y);
-						var nearest:Creature = creatures[0];
+						var nearestDist:Number = 1000;
+						var secondNearestDist:Number = 10000;
+						var nearest:Creature;
+						var secondNearest:Creature;
 						
 						for each (var creature:Creature in creatures) {
 							var dist:Number = FP.distance(Input.mouseX, Input.mouseY, creature.x, creature.y);
 							if (dist < nearestDist) {
+								
+								secondNearestDist = nearestDist;
+								secondNearest = nearest
+								
 								nearestDist = dist;
 								nearest = creature;
+								
+							} else if (dist < secondNearestDist) {
+								secondNearestDist = dist;
+								secondNearest = creature;
 							}
 						}
-						baby = nearest.spawn();
+						baby = secondNearest.mate(nearest);
 						
 					} else if (creatures.length > 0) {
-						baby = creatures[0].spawn();
+						baby = creatures[0].mate(creatures[0]);
 					} else {
 						Map.current.reset();
 					}

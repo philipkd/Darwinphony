@@ -121,11 +121,11 @@ package
 			}
 			if (dad_cd > 0) {
 				dad_cd -= FP.elapsed;
-				circles.frame = 1;
+				circles.frame = 2;
 			}
 			if (mom_cd > 0) {
 				mom_cd -= FP.elapsed;
-				circles.frame = 2;
+				circles.frame = 1;
 			}
 			
 			circles.visible = (dad_cd > 0) || (mom_cd > 0) || (kid_cd > 0);
@@ -144,7 +144,7 @@ package
 
 			frames.frame = row * frames.columns + col;
 					
-			anchor_x += Map.norm() * 20 - 10;
+			anchor_x += Map.norm() * 40 - 20;
 
 			if (anchor_x < 20)
 				anchor_x = 20;
@@ -173,15 +173,25 @@ package
 			return baby;
 		}
 		
-		public function spawn():Creature {
+		public function mate(mom:Creature):Creature {
 			dad_cd = .5;
-			var baby:Creature = this.clone();
+			mom.mom_cd = .5;
+
+			var baby:Creature;
+			baby = this.clone();
+
+			if (Math.random() < .5)
+				baby.frames.frame = mom.frames.frame;
+			if (Math.random() < .5)
+				baby.anchor_x = mom.anchor_x;
+						
 			Map.current.add(baby);
 			
 			baby.mutate();
 			baby.kid_cd = .5;
 			baby.setTimerToY(Input.mouseY)			
 			baby.update();
+			
 			return baby;
 		}
 		
