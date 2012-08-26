@@ -83,10 +83,15 @@ package
 				
 				if (creatures.length > 0) {
 					for each (var c:Creature in creatures) {
-						if (!c.muted()) {
-							Tones.shared().play(c.frames.frame);
-							c.mute();
+						if (c.amp_y > 30 && !c.tone_muted()) {
+							Notes.shared().play_tone(c.frames.frame);
+							c.mute_tone();
+						} else if (!c.harp_muted()) {
+							Notes.shared().play_harp(c.frames.frame);
+							c.mute_harp();
+							
 						}
+						
 					}
 					img.alpha = 1;
 				} else {

@@ -32,7 +32,8 @@ package
 		private static const cycle_length:Number = 8;
 
 		private var timer:Number = 0;
-		private var mute_cooldown:Number = 0;		
+		private var mute_tone_cd:Number = 0;		
+		private var mute_harp_cd:Number = 0;		
 		private var _sprites:*;
 	
 		
@@ -59,17 +60,28 @@ package
 			super(x, y, graphic, mask);			
 		}
 		
-		public function mute():void {
-			mute_cooldown = .25;
+		public function mute_tone():void {
+			mute_tone_cd = .25;
 		}
 		
-		public function muted():Boolean {
-			return mute_cooldown > 0;
+		public function mute_harp():void {
+			mute_harp_cd = .25;
+		}
+
+		
+		public function tone_muted():Boolean {
+			return mute_tone_cd > 0;
+		}
+
+		public function harp_muted():Boolean {
+			return mute_harp_cd > 0;
 		}
 		
 		private function update_cooldowns():void {
-			if (mute_cooldown > 0)
-				mute_cooldown -= FP.elapsed;  
+			if (mute_tone_cd > 0)
+				mute_tone_cd -= FP.elapsed;
+			if (mute_harp_cd > 0)
+				mute_harp_cd -= FP.elapsed;
 		}
 		
 		public override function update():void {
@@ -103,7 +115,10 @@ package
 			frames.frame = Math.random() * frames.frameCount;
 			
 			amp_x = 0;
-			amp_y = 50;
+			if (Math.random() < .5)
+				amp_y = 50;
+			else
+				amp_y = 25;
 
 			subs_x = 1;
 			subs_y = 4;
@@ -140,6 +155,14 @@ package
 				col = Math.random() * frames.columns;
 			if (Math.random() < .07)
 				row = Math.random() * frames.rows;
+			
+			if (Math.random() < .07) {
+				if (amp_y == 50)
+					amp_y = 30;
+				else
+					amp_y = 50;
+			}
+				
 
 			frames.frame = row * frames.columns + col;
 					
@@ -183,6 +206,8 @@ package
 				baby.frames.frame = mom.frames.frame;
 			if (Math.random() < .5)
 				baby.anchor_x = mom.anchor_x;
+			if (Math.random() < .5)
+				baby.amp_y = mom.amp_y;
 						
 			Map.current.add(baby);
 			

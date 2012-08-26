@@ -122,7 +122,7 @@ package
 			if (Input.mouseUp)
 				ready = true;
 			
-			Tones.shared().tick(FP.elapsed);
+			Notes.shared().tick(FP.elapsed);
 			
 			super.update();
 		}
