@@ -10,6 +10,22 @@ package
 		
 		[Embed(source = 'assets/map-shore.png')] private static const MAP_SHORE:Class;					
 		[Embed(source = 'assets/creatures-shore.png')] private static const CREATURES_SHORE:Class;					
+				
+		[Embed(source = 'assets/map-forest.png')] private static const MAP_FOREST:Class;					
+		[Embed(source = 'assets/creatures-forest.png')] private static const CREATURES_FOREST:Class;					
+
+		[Embed(source = 'assets/map-tundra.png')] private static const MAP_TUNDRA:Class;					
+		[Embed(source = 'assets/creatures-tundra.png')] private static const CREATURES_TUNDRA:Class;					
+
+		[Embed(source = 'assets/map-flowers.png')] private static const MAP_FLOWERS:Class;					
+		[Embed(source = 'assets/creatures-flowers.png')] private static const CREATURES_FLOWERS:Class;					
+
+		public static var current:Darwination;
+		
+		private var shore:Map;
+		private var forest:Map;
+		private var tundra:Map;
+		private var flowers:Map;
 		
 		public function Darwination()
 		{			
@@ -18,8 +34,27 @@ package
 			FP.screen.scale = 5;
 			FP.screen.color = 0x444644;
 			
-			FP.world = new MyWorld(MAP_SHORE,CREATURES_SHORE, 72, 84);
+			shore = new Map(MAP_SHORE,CREATURES_SHORE, 72, 84);
+			forest = new Map(MAP_FOREST, CREATURES_FOREST)
+			tundra = new Map(MAP_TUNDRA, CREATURES_TUNDRA)
+			flowers = new Map(MAP_FLOWERS, CREATURES_FLOWERS)
 			
+			FP.world = shore;
+			current = this;
+			
+		}
+		
+		public function select_forest():void {
+			FP.world = forest;
+		}
+		public function select_shore():void {
+			FP.world = shore; 
+		}
+		public function select_tundra():void {
+			FP.world = tundra;
+		}
+		public function select_flowers():void {
+			FP.world = flowers;
 		}
 	}
 }

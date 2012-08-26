@@ -87,8 +87,8 @@ package
 				
 				text.visible = hover;
 				
-				if (Input.pressed(Key.DIGIT_1) || (hover && MyWorld.current.cursor() != this)) {
-					MyWorld.current.clear_cursor();
+				if (Input.pressed(Key.DIGIT_1) || (hover && Map.current.cursor() != this)) {
+					Map.current.clear_cursor();
 					FP.world.add(new Finch(FINCH_TYPE_CURSOR));
 				}
 					

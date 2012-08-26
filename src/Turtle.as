@@ -30,7 +30,7 @@ package
 			turtle_type = turtle_type_value;
 			
 			if (turtle_type == TURTLE_TYPE_LAND)
-				layer = MyWorld.LAYER_TURTLES;
+				layer = Map.LAYER_TURTLES;
 			
 			
 			img = new Image(TURTLE);
@@ -100,8 +100,8 @@ package
 				
 				text.visible = hover;
 				
-				if (Input.pressed(Key.DIGIT_2) || (hover && MyWorld.current.cursor() != this)) {
-					MyWorld.current.clear_cursor();
+				if (Input.pressed(Key.DIGIT_2) || (hover && Map.current.cursor() != this)) {
+					Map.current.clear_cursor();
 					FP.world.add(new Turtle(TURTLE_TYPE_CURSOR));
 				}
 				

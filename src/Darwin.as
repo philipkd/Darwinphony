@@ -54,11 +54,13 @@ package
 			else
 				graphic = new Graphiclist(darwin, text);		
 			
-			text.visible = collidePoint(x,y,Input.mouseX, Input.mouseY);
-						
-			if (Input.pressed(Key.R)) {
-				MyWorld.current.reset();
-			}
+			var hover:Boolean = collidePoint(x,y,Input.mouseX, Input.mouseY);
+			
+			text.visible = hover;
+			
+			if (hover && Input.mousePressed)
+				FP.world = new Selector;
+			
 		}
 		
 	}

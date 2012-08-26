@@ -47,7 +47,7 @@ package
 			}
 			
 			if (Input.pressed(Key.DIGIT_8)) {
-				MyWorld.current.reset();
+				Map.current.reset();
 			}
 		}
 	}

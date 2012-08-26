@@ -5,10 +5,10 @@ package
 	import net.flashpunk.*;
 	import net.flashpunk.graphics.Image;
 	
-	public class MyWorld extends World
+	public class Map extends World
 	{
 		
-		public static var current:MyWorld;
+		public static var current:Map;
 		public static const LAYER_MAP:int = 5;
 		public static const LAYER_TURTLES:int = 4;
 		public static const LAYER_KRILL:int = 3;
@@ -18,7 +18,7 @@ package
 		private var _initial_turtle_x:Number;
 		private var _initial_turtle_y:Number;
 		
-		public function MyWorld(map:*, creatures:*, initial_turtle_x:Number, initial_turtle_y:Number)
+		public function Map(map:*, creatures:*, initial_turtle_x:Number = -1, initial_turtle_y:Number = -1)
 		{
 			_map = map;
 			_creatures = creatures;
@@ -59,10 +59,12 @@ package
 			
 			add(new Spawner(Spawner.SPAWN_TYPE_CURSOR));
 			
-			var beginner:Turtle = new Turtle(Turtle.TURTLE_TYPE_LAND);
-			beginner.x = _initial_turtle_x;
-			beginner.y = _initial_turtle_y;
-			add(beginner);
+			if (_initial_turtle_x != -1) {
+				var beginner:Turtle = new Turtle(Turtle.TURTLE_TYPE_LAND);
+				beginner.x = _initial_turtle_x;
+				beginner.y = _initial_turtle_y;
+				add(beginner);
+			}
 		
 			add(new Trash);
 			

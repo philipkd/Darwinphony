@@ -44,7 +44,7 @@ package
 			frames.centerOO();
 			mask = new Hitbox(12,12,-6,-6); 
 			type = 'creature';
-			layer = MyWorld.LAYER_KRILL;
+			layer = Map.LAYER_KRILL;
 			graphic.visible = false;
 
 			if (seed)
@@ -117,7 +117,7 @@ package
 
 			frames.frame = row * frames.columns + col;
 					
-			initial_x += MyWorld.norm() * 50 - 25;
+			initial_x += Map.norm() * 50 - 25;
 
 			if (initial_x < 20)
 				initial_x = 20;
@@ -148,7 +148,7 @@ package
 		
 		public function divide():void {
 			var baby:Creature = this.clone();
-			MyWorld.current.add(baby);
+			Map.current.add(baby);
 			
 			baby.mutate();
 		}

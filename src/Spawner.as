@@ -65,7 +65,7 @@ package
 					} else if (creatures.length > 0) {
 						creatures[0].divide();
 					} else {
-						MyWorld.current.reset();
+						Map.current.reset();
 					}
 					
 					img.alpha = 1;
@@ -79,8 +79,8 @@ package
 				
 				text.visible = hover;
 				
-				if (Input.pressed(Key.DIGIT_3) || (hover && MyWorld.current.cursor() != this)) {
-					MyWorld.current.clear_cursor();
+				if (Input.pressed(Key.DIGIT_3) || (hover && Map.current.cursor() != this)) {
+					Map.current.clear_cursor();
 					FP.world.add(new Spawner(SPAWN_TYPE_CURSOR));
 				}
 			}
