@@ -63,6 +63,8 @@ package
 			beginner.x = _initial_turtle_x;
 			beginner.y = _initial_turtle_y;
 			add(beginner);
+		
+			add(new Trash);
 			
 			super.begin();
 		}
