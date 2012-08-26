@@ -15,7 +15,7 @@ package
 		public static const LAYER_KRILL:int = 3;
 		
 		public var ready:Boolean = false;
-
+		
 		private var began:Boolean;
 		
 		private var _map:*;
@@ -121,6 +121,8 @@ package
 		public override function update():void {
 			if (Input.mouseUp)
 				ready = true;
+			
+			Tones.shared().tick(FP.elapsed);
 			
 			super.update();
 		}

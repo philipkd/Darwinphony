@@ -72,7 +72,6 @@ package
 		public override function update():void {
 			if (turtle_type != TURTLE_TYPE_MENU) {
 			
-				const tps:int = 8;
 				const cycle:int = 2;
 				
 				timer += FP.elapsed;
@@ -85,7 +84,7 @@ package
 				if (creatures.length > 0) {
 					for each (var c:Creature in creatures) {
 						if (!c.muted()) {
-							Tones.shared().play(c.frames.frame,int(timer * tps));
+							Tones.shared().play(c.frames.frame);
 							c.mute();
 						}
 					}

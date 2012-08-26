@@ -2,9 +2,11 @@ package
 {
 	
 	import net.flashpunk.*;
+	import net.flashpunk.graphics.*;
+	import net.flashpunk.masks.*;
 	import net.flashpunk.utils.*;
 	
-	public class Tones extends Object
+	public class Tones extends Entity
 	{
 
 		[Embed(source = 'assets/tone1.mp3')] private const TONE_1_1:Class;
@@ -265,6 +267,8 @@ package
 		[Embed(source = 'assets/tone16.mp3')] private const TONE_16_16:Class;
 		
 		private var tones:Array = new Array(16);
+		
+		private var timer:Number = 0;
 		
 		private static var _shared:Tones = null;
 		
@@ -541,10 +545,17 @@ package
 			tones[15][15] = new Sfx(TONE_16_16);			
 		}
 		
-		public function play(x:uint,y:uint):void {
-			var tone:Sfx = tones[x][y];
+		public function play(note:uint):void {
+			var tps:Number = 8;
+			var tone:Sfx = tones[note][int(timer * tps)];
 			if (!tone.playing)
 				tone.play();
+		}
+		
+		public function tick(elapsed:Number):void {
+			timer += elapsed;
+			if (timer > 2)
+				timer -= 2;			
 		}
 		
 	}

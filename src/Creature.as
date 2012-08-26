@@ -101,7 +101,6 @@ package
 			anchor_y = FP.screen.height * .5;
 			
 			frames.frame = Math.random() * frames.frameCount;
-			frames.frame = 0;
 			
 			amp_x = 0;
 			amp_y = 50;
