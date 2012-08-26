@@ -11,6 +11,8 @@ package
 		[Embed(source = 'assets/darwin.png')] private static const DARWIN:Class;
 		[Embed(source = 'assets/darwin-cane.png')] private static const DARWIN_CANE:Class;
 		
+		public static var current:Darwin;
+		
 		private var darwin:Image = new Image(DARWIN);
 		private var darwin_mask:Pixelmask = new Pixelmask(DARWIN);
 		
@@ -36,15 +38,18 @@ package
 			
 			graphic = darwin;
 			mask = darwin_mask;
+						
+			super(x, y, graphic, mask);
 			
-			super(x, y, graphic, mask);          
+			current = this;
+			
 		}
 		
 		public override function update():void {
 			
 			var pps:int = 500;
 			
-			if (Input.check(Key.SPACE)) {
+			if (Input.mouseDown) {
 				graphic = darwin_cane;
 				mask = darwin_cane_mask;
 								
@@ -52,31 +57,7 @@ package
 				graphic = darwin;		
 				mask = darwin_mask;
 			}
-				
-			if (Input.check(Key.SPACE)) {
-				var creatures:Array = new Array();
-				FP.world.getType('creature',creatures);
-				if (creatures.length > 1) {
-					var nearestDist:Number = FP.distance(Input.mouseX, Input.mouseY, creatures[0].x, creatures[0].y);
-					var nearest:Creature = creatures[0];
-					
-					for each (var creature:Creature in creatures) {
-						var dist:Number = FP.distance(Input.mouseX, Input.mouseY, creature.x, creature.y);
-						if (dist < nearestDist) {
-							nearestDist = dist;
-							nearest = creature;
-						}
-					}
-					nearest.divide();
-				} else if (creatures.length > 0) {
-					creatures[0].divide();
-				} else {
-					MyWorld.current.reset();
-				}
-				
-				
-			}
-			
+						
 			if (Input.pressed(Key.R)) {
 				MyWorld.current.reset();
 			}

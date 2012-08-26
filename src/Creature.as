@@ -13,10 +13,9 @@ package
 	import net.flashpunk.masks.Pixelmask;
 	import net.flashpunk.utils.*;
 	
-	public class Creature extends Entity
-	{
+	public class Creature extends Entity {
 
-		public var frames:Spritemap = new Spritemap(CREATURES,12,12);		
+		public var frames:Spritemap;		
 		
 		public var initial_x:Number;
 		public var initial_y:Number;		
@@ -30,18 +29,22 @@ package
 		public var cos_x:Boolean;
 		public var cos_y:Boolean;
 		
-		[Embed(source = 'assets/creatures.png')] private static const CREATURES:Class;
 		private static const cycle_length:Number = 8;
 
 		private var timer:Number = 0;
-		private var mute_cooldown:Number = 0;		
+		private var mute_cooldown:Number = 0;
 		
-		public function Creature(seed:Boolean)
+		private var _sprites:*;
+		
+		public function Creature(sprites:*, seed:Boolean)
 		{
+			_sprites = sprites;
+			frames = new Spritemap(sprites,12,12);
 			graphic = frames;
 			frames.centerOO();
 			mask = new Hitbox(12,12,-6,-6); 
 			type = 'creature';
+			layer = MyWorld.LAYER_KRILL;
 			graphic.visible = false;
 
 			if (seed)
@@ -80,13 +83,6 @@ package
 				y = amp_y * Math.cos(2 * Math.PI * (timer / cycle_length) * subs_y) + initial_y; 
 			else
 				y = amp_y * Math.sin(2 * Math.PI * (timer / cycle_length) * subs_y) + initial_y;
-
-
-			if (collidePoint(x,y,Input.mouseX, Input.mouseY)) {
-				if (Input.mouseDown) {
-					FP.world.remove(this);
-				}
-			}
 			
 			graphic.visible = true;
 
@@ -131,7 +127,7 @@ package
 		}
 		
 		public function clone():Creature {
-			var baby:Creature = new Creature(false);
+			var baby:Creature = new Creature(_sprites, false);
 
 			baby.frames.frame = frames.frame;
 			
@@ -155,6 +151,10 @@ package
 			MyWorld.current.add(baby);
 			
 			baby.mutate();
+		}
+		
+		public function kill():void {
+			FP.world.remove(this);
 		}
 	}
 }
