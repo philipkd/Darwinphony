@@ -17,8 +17,8 @@ package
 
 		public var frames:Spritemap;		
 		
-		public var initial_x:Number;
-		public var initial_y:Number;		
+		public var anchor_x:Number;
+		public var anchor_y:Number;		
 		
 		public var amp_x:Number;
 		public var amp_y:Number;
@@ -75,14 +75,14 @@ package
 				timer -= cycle_length;
 
 			if (cos_x)
-				x = amp_x * Math.cos(2 * Math.PI * (timer / cycle_length) * subs_x) + initial_x; 
+				x = amp_x * Math.cos(2 * Math.PI * (timer / cycle_length) * subs_x) + anchor_x; 
 			else
-				x = amp_x * Math.sin(2 * Math.PI * (timer / cycle_length) * subs_x) + initial_x;
+				x = amp_x * Math.sin(2 * Math.PI * (timer / cycle_length) * subs_x) + anchor_x;
 			
 			if (cos_y)
-				y = amp_y * Math.cos(2 * Math.PI * (timer / cycle_length) * subs_y) + initial_y; 
+				y = amp_y * Math.cos(2 * Math.PI * (timer / cycle_length) * subs_y) + anchor_y; 
 			else
-				y = amp_y * Math.sin(2 * Math.PI * (timer / cycle_length) * subs_y) + initial_y;
+				y = amp_y * Math.sin(2 * Math.PI * (timer / cycle_length) * subs_y) + anchor_y;
 			
 			graphic.visible = true;
 
@@ -91,8 +91,8 @@ package
 		
 		public function seed():void {
 			
-			initial_x = FP.screen.width * .25 + Math.random() * FP.screen.width * .5;
-			initial_y = FP.screen.height * .5;
+			anchor_x = FP.screen.width * .25 + Math.random() * FP.screen.width * .5;
+			anchor_y = FP.screen.height * .5;
 			
 			frames.frame = Math.random() * frames.frameCount;
 			
@@ -117,12 +117,12 @@ package
 
 			frames.frame = row * frames.columns + col;
 					
-			initial_x += Map.norm() * 50 - 25;
+			anchor_x += Map.norm() * 50 - 25;
 
-			if (initial_x < 20)
-				initial_x = 20;
-			else if (initial_x > FP.screen.width - 20)
-				initial_x = FP.screen.width - 20;
+			if (anchor_x < 20)
+				anchor_x = 20;
+			else if (anchor_x > FP.screen.width - 20)
+				anchor_x = FP.screen.width - 20;
 
 		}
 		
@@ -131,8 +131,8 @@ package
 
 			baby.frames.frame = frames.frame;
 			
-			baby.initial_x = initial_x;
-			baby.initial_y = initial_y;
+			baby.anchor_x = anchor_x;
+			baby.anchor_y = anchor_y;
 			
 			baby.amp_x = amp_x;
 			baby.amp_y = amp_y;
@@ -146,11 +146,27 @@ package
 			return baby;
 		}
 		
-		public function divide():void {
+		public function spawn():Creature {
 			var baby:Creature = this.clone();
 			Map.current.add(baby);
 			
 			baby.mutate();
+			
+			return baby;
+		}
+		
+		public function setTimerToY(birth_y:Number):void {
+			
+			if (birth_y > (anchor_y + amp_y))
+				birth_y = amp_y;
+			if (birth_y < (anchor_y - amp_y))
+				birth_y = anchor_y - amp_y;
+			
+			var rads:Number = Math.acos((birth_y - anchor_y) / amp_y);
+			
+			trace(rads, (rads / Math.PI), (rads / Math.PI) * (cycle_length * .5));
+						
+			timer = (rads / Math.PI) * (cycle_length * .5 / Number(subs_y)); 
 		}
 		
 		public function kill():void {

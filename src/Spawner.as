@@ -47,6 +47,8 @@ package
 				x = Input.mouseX;
 				y = Input.mouseY;
 				
+				var baby:Creature;
+				
 				if (Input.mouseDown && !Map.current.menuHover() && Map.current.ready) {
 
 					var creatures:Array = new Array();
@@ -62,9 +64,11 @@ package
 								nearest = creature;
 							}
 						}
-						nearest.divide();
+						baby = nearest.spawn();
+						baby.setTimerToY(Input.mouseY);
 					} else if (creatures.length > 0) {
-						creatures[0].divide();
+						baby = creatures[0].spawn();
+						baby.setTimerToY(Input.mouseY);
 					} else {
 						Map.current.reset();
 					}
