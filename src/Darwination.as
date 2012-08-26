@@ -18,7 +18,7 @@ package
 			FP.screen.scale = 5;
 			FP.screen.color = 0x444644;
 			
-			FP.world = new MyWorld(MAP_SHORE,CREATURES_SHORE);
+			FP.world = new MyWorld(MAP_SHORE,CREATURES_SHORE, 72, 84);
 			
 		}
 	}

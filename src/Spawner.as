@@ -15,6 +15,7 @@ package
 		public var spawn_type:int; 
 		
 		private var img:Image;
+		private var text:Text;
 		
 		public function Spawner(spawn_type_value:int) {
 			spawn_type = spawn_type_value;
@@ -22,7 +23,6 @@ package
 			img = new Image(SPAWN);
 			img.x = -img.width * .5;
 			img.y = -img.height * .5;
-			graphic = img;
 			mask = new Hitbox(img.width, img.height, img.x, img.y);
 		
 			if (spawn_type == SPAWN_TYPE_CURSOR) {
@@ -30,6 +30,13 @@ package
 				img.alpha = .5;
 				x = Input.mouseX;
 				y = Input.mouseY;
+				graphic = img;
+			} else {
+				text = new Text('3');
+				text.centerOO();
+				text.y = -10;
+				text.scale = .5;
+				graphic = new Graphiclist(text, img);				
 			}
 			super(x, y, graphic, mask);
 		}
@@ -68,7 +75,11 @@ package
 				
 				
 			} else if (spawn_type == SPAWN_TYPE_INERT) {
-				if (Input.check(Key.DIGIT_3)) {
+				var hover:Boolean = collidePoint(x,y,Input.mouseX,Input.mouseY);
+				
+				text.visible = hover;
+				
+				if (Input.pressed(Key.DIGIT_3) || (hover && MyWorld.current.cursor() != this)) {
 					MyWorld.current.clear_cursor();
 					FP.world.add(new Spawner(SPAWN_TYPE_CURSOR));
 				}

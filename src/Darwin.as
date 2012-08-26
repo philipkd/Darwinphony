@@ -2,7 +2,7 @@ package
 {
 	import net.flashpunk.*;
 	import net.flashpunk.graphics.*;
-	import net.flashpunk.masks.Pixelmask;
+	import net.flashpunk.masks.*;
 	import net.flashpunk.utils.*;
 	
 	public class Darwin extends Entity
@@ -13,31 +13,31 @@ package
 		
 		public static var current:Darwin;
 		
-		private var darwin:Image = new Image(DARWIN);
-		private var darwin_mask:Pixelmask = new Pixelmask(DARWIN);
-		
+		private var darwin:Image = new Image(DARWIN);		
 		private var darwin_cane:Image = new Image(DARWIN_CANE);
-		private var darwin_cane_mask:Pixelmask = new Pixelmask(DARWIN_CANE);
-				
+
+		private var text:Text;
+		
 		public function Darwin(x:Number=0, y:Number=0, graphic:Graphic=null, mask:Mask=null)
 		{
 			
 			type = 'darwin';
 			layer = -1;
 	
-			darwin.centerOO();
+			darwin.x = -darwin.width * .5;
+			darwin.y = -darwin.height * .5;
 			
-			darwin_mask.x = -darwin.originX
-			darwin_mask.y = -darwin.originY;
+			mask = new Hitbox(darwin.width, darwin.height, darwin.x, darwin.y);
+			
+			darwin_cane.x = darwin.x
+			darwin_cane.y = darwin.y			
 
-			darwin_cane.originX = darwin.originX;
-			darwin_cane.originY = darwin.originY;			
-			
-			darwin_cane_mask.x = -darwin.originX;
-			darwin_cane_mask.y = -darwin.originY;
-			
-			graphic = darwin;
-			mask = darwin_mask;
+			text = new Text('Key 0');
+			text.centerOO();
+			text.y = darwin.y - 3;
+			text.scale = .5;
+				
+			graphic = new Graphiclist(darwin, text);
 						
 			super(x, y, graphic, mask);
 			
@@ -49,14 +49,12 @@ package
 			
 			var pps:int = 500;
 			
-			if (Input.mouseDown) {
-				graphic = darwin_cane;
-				mask = darwin_cane_mask;
-								
-			} else {
-				graphic = darwin;		
-				mask = darwin_mask;
-			}
+			if (Input.mouseDown)
+				graphic = new Graphiclist(darwin_cane, text);
+			else
+				graphic = new Graphiclist(darwin, text);		
+			
+			text.visible = collidePoint(x,y,Input.mouseX, Input.mouseY);
 						
 			if (Input.pressed(Key.R)) {
 				MyWorld.current.reset();

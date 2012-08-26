@@ -20,13 +20,13 @@ package
 		public var finch_type:int;
 		
 		private var img:Image;
+		private var text:Text;
 		
 		public function Finch(finch_type_value:int)
 		{
 			finch_type = finch_type_value;
 			
 			img = new Image(FINCH);
-			graphic = img;
 			img.x = -18;
 			img.y = -3
 		
@@ -36,8 +36,16 @@ package
 				type = 'cursor';
 				x = Input.mouseX;
 				y = Input.mouseY;
-			} else {
+				graphic = img;
+			} else {				
 				mask = new Hitbox(img.width,img.height,img.x,img.y);
+				text = new Text('1');
+				text.centerOO();
+				text.y = -8;
+				text.x = -5;
+				text.scale = .5;
+				graphic = new Graphiclist(img,text);
+				
 			}
 			
 			super(x, y, graphic, mask);
@@ -74,7 +82,12 @@ package
 			}
 			
 			if (finch_type == FINCH_TYPE_INERT) {
-				if (Input.check(Key.DIGIT_1)) {
+				
+				var hover:Boolean = (collidePoint(x,y,Input.mouseX, Input.mouseY));
+				
+				text.visible = hover;
+				
+				if (Input.pressed(Key.DIGIT_1) || (hover && MyWorld.current.cursor() != this)) {
 					MyWorld.current.clear_cursor();
 					FP.world.add(new Finch(FINCH_TYPE_CURSOR));
 				}

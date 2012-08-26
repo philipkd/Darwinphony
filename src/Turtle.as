@@ -4,7 +4,9 @@ package
 	
 	import net.flashpunk.*;
 	import net.flashpunk.Entity;
+	import net.flashpunk.graphics.Graphiclist;
 	import net.flashpunk.graphics.Image;
+	import net.flashpunk.graphics.Text;
 	import net.flashpunk.masks.Pixelmask;
 	import net.flashpunk.utils.*;
 	
@@ -21,6 +23,7 @@ package
 
 		private var timer:Number = 0;
 		private var img:Image;
+		private var text:Text;
 			
 		public function Turtle(turtle_type_value:int)
 		{			
@@ -39,12 +42,19 @@ package
 				img.alpha = .5;
 				x = Input.mouseX;
 				y = Input.mouseY;
+				graphic = img;
 			} else if (turtle_type == TURTLE_TYPE_LAND) {
 				type = 'turtle';
 				img.alpha = .5;			
+				graphic = img;
+			} else {
+				text = new Text('2');
+				text.centerOO();
+				text.y = -13;
+				text.scale = .5;				
+				graphic = new Graphiclist(text, img);
 			}
 			
-			graphic = img;
 			
 			mask = new Pixelmask(TURTLE, img.x, img.y);
 			
@@ -86,7 +96,11 @@ package
 			}
 			
 			if (turtle_type == TURTLE_TYPE_MENU) {
-				if (Input.check(Key.DIGIT_2)) {
+				var hover:Boolean = collidePoint(x,y,Input.mouseX,Input.mouseY);
+				
+				text.visible = hover;
+				
+				if (Input.pressed(Key.DIGIT_2) || (hover && MyWorld.current.cursor() != this)) {
 					MyWorld.current.clear_cursor();
 					FP.world.add(new Turtle(TURTLE_TYPE_CURSOR));
 				}
