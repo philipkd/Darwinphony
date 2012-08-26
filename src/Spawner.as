@@ -71,10 +71,9 @@ package
 							}
 						}
 						baby = nearest.spawn();
-						baby.setTimerToY(Input.mouseY);
+						
 					} else if (creatures.length > 0) {
 						baby = creatures[0].spawn();
-						baby.setTimerToY(Input.mouseY);
 					} else {
 						Map.current.reset();
 					}

@@ -1,17 +1,11 @@
 package
-{
-	import flash.ui.Mouse;
-	
-	import flashx.textLayout.operations.CreateDivOperation;
+{	
 	
 	import net.flashpunk.*;
-	import net.flashpunk.Entity;
-	import net.flashpunk.Graphic;
-	import net.flashpunk.graphics.Image;
-	import net.flashpunk.graphics.Spritemap;
-	import net.flashpunk.masks.Hitbox;
-	import net.flashpunk.masks.Pixelmask;
+	import net.flashpunk.graphics.*;
 	import net.flashpunk.utils.*;
+	import net.flashpunk.masks.*;
+
 	
 	public class Creature extends Entity {
 
@@ -29,20 +23,32 @@ package
 		public var cos_x:Boolean;
 		public var cos_y:Boolean;
 		
+		public var mom_cd:Number = 0;
+		public var dad_cd:Number = 0;
+		public var kid_cd:Number = 0;
+		
+		[Embed(source = 'assets/circles.png')] private static const CIRCLES:Class;
+		private var circles:Spritemap = new Spritemap(CIRCLES,16,16);
 		private static const cycle_length:Number = 8;
 
 		private var timer:Number = 0;
-		private var mute_cooldown:Number = 0;
-		
+		private var mute_cooldown:Number = 0;		
 		private var _sprites:*;
+	
 		
 		public function Creature(sprites:*, seed:Boolean)
 		{
 			_sprites = sprites;
 			frames = new Spritemap(sprites,12,12);
-			graphic = frames;
+			graphic = new Graphiclist(frames,circles);
+			circles.visible = false;
 			frames.centerOO();
-			mask = new Hitbox(12,12,-6,-6); 
+			
+			circles.x = -frames.width * .5 - 2;
+			circles.y = -frames.height * .5 - 2;
+			
+			mask = new Hitbox(12,12,-6,-6);
+			
 			type = 'creature';
 			layer = Map.LAYER_KRILL;
 			graphic.visible = false;
@@ -95,6 +101,7 @@ package
 			anchor_y = FP.screen.height * .5;
 			
 			frames.frame = Math.random() * frames.frameCount;
+			frames.frame = 0;
 			
 			amp_x = 0;
 			amp_y = 50;
@@ -107,10 +114,24 @@ package
 		}
 			
 		
-//		public override function render():void {
-//				Draw.rect(x + 8,y - 12,20,4,0x555555);
-//			super.render();
-//		}
+		public override function render():void {
+			if (kid_cd > 0) {
+				kid_cd -= FP.elapsed;
+				circles.frame = 0;
+			}
+			if (dad_cd > 0) {
+				dad_cd -= FP.elapsed;
+				circles.frame = 1;
+			}
+			if (mom_cd > 0) {
+				mom_cd -= FP.elapsed;
+				circles.frame = 2;
+			}
+			
+			circles.visible = (dad_cd > 0) || (mom_cd > 0) || (kid_cd > 0);
+			
+			super.render();
+		}
 		
 		public function mutate():void {
 			var row:uint = frames.frame / frames.rows;
@@ -153,11 +174,14 @@ package
 		}
 		
 		public function spawn():Creature {
+			dad_cd = .5;
 			var baby:Creature = this.clone();
 			Map.current.add(baby);
 			
 			baby.mutate();
-			
+			baby.kid_cd = .5;
+			baby.setTimerToY(Input.mouseY)			
+			baby.update();
 			return baby;
 		}
 		
@@ -169,8 +193,6 @@ package
 				birth_y = anchor_y - amp_y;
 			
 			var rads:Number = Math.acos((birth_y - anchor_y) / amp_y);
-			
-			trace(rads, (rads / Math.PI), (rads / Math.PI) * (cycle_length * .5));
 						
 			timer = (rads / Math.PI) * (cycle_length * .5 / Number(subs_y)); 
 		}
