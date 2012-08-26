@@ -39,22 +39,22 @@ package
 			tundra = new Map(MAP_TUNDRA, CREATURES_TUNDRA)
 			flowers = new Map(MAP_FLOWERS, CREATURES_FLOWERS)
 			
-			FP.world = shore;
+			shore.select();
 			current = this;
 			
 		}
 		
 		public function select_forest():void {
-			FP.world = forest;
+			forest.select();
 		}
 		public function select_shore():void {
-			FP.world = shore; 
+			shore.select();
 		}
 		public function select_tundra():void {
-			FP.world = tundra;
+			tundra.select();
 		}
 		public function select_flowers():void {
-			FP.world = flowers;
+			flowers.select();
 		}
 	}
 }

@@ -13,6 +13,8 @@ package
 		
 		public static var current:Darwin;
 		
+		public var hover:Boolean; 
+		
 		private var darwin:Image = new Image(DARWIN);		
 		private var darwin_cane:Image = new Image(DARWIN_CANE);
 
@@ -54,11 +56,11 @@ package
 			else
 				graphic = new Graphiclist(darwin, text);		
 			
-			var hover:Boolean = collidePoint(x,y,Input.mouseX, Input.mouseY);
+			hover = collidePoint(x,y,Input.mouseX, Input.mouseY);
 			
 			text.visible = hover;
 			
-			if (hover && Input.mousePressed)
+			if (hover && Input.mousePressed || Input.pressed(Key.DIGIT_0))
 				FP.world = new Selector;
 			
 		}

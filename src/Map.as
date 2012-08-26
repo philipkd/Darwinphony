@@ -96,6 +96,11 @@ package
 			}
 		}
 		
+		public function select():void {
+			current = this;
+			FP.world = this;
+		}
+		
 		public static function norm():Number {
 			return (Math.random() + Math.random() + Math.random() + Math.random()) / 4.0
 		}

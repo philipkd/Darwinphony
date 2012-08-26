@@ -109,7 +109,7 @@ package
 			
 			if (turtle_type == TURTLE_TYPE_CURSOR) {
 				
-				if (Input.mousePressed) {
+				if (Input.mousePressed && !Darwin.current.hover) {
 					drop_copy();
 				}
 				

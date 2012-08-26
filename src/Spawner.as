@@ -46,7 +46,7 @@ package
 				x = Input.mouseX;
 				y = Input.mouseY;
 				
-				if (Input.mouseDown) {
+				if (Input.mouseDown && !Darwin.current.hover) {
 
 					var creatures:Array = new Array();
 					FP.world.getType('creature',creatures);
