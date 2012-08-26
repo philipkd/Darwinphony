@@ -30,12 +30,11 @@ package
 		public var cos_x:Boolean;
 		public var cos_y:Boolean;
 		
-		
 		[Embed(source = 'assets/creatures.png')] private static const CREATURES:Class;
 		private static const cycle_length:Number = 8;
 
 		private var timer:Number = 0;
-				
+		private var mute_cooldown:Number = 0;		
 		
 		public function Creature(seed:Boolean)
 		{
@@ -51,8 +50,23 @@ package
 			super(x, y, graphic, mask);			
 		}
 		
+		public function mute():void {
+			mute_cooldown = .25;
+		}
+		
+		public function muted():Boolean {
+			return mute_cooldown > 0;
+		}
+		
+		private function update_cooldowns():void {
+			if (mute_cooldown > 0)
+				mute_cooldown -= FP.elapsed;  
+		}
+		
 		public override function update():void {
-									
+			
+			update_cooldowns();
+			
 			timer += FP.elapsed;			
 			if (timer > cycle_length)
 				timer -= cycle_length;
@@ -69,18 +83,15 @@ package
 
 
 			if (collidePoint(x,y,Input.mouseX, Input.mouseY)) {
-				
 				if (Input.mouseDown) {
 					FP.world.remove(this);
 				}
-			
 			}
 			
-			
-					
 			graphic.visible = true;
 
 		}
+
 		
 		public function seed():void {
 			
@@ -96,7 +107,6 @@ package
 			subs_y = 4;
 			
 			cos_y = true;
-	
 			
 		}
 			
@@ -118,49 +128,6 @@ package
 			else if (initial_x > FP.screen.width - 20)
 				initial_x = FP.screen.width - 20;
 
-			
-//			initial_y += MyWorld.norm() * 36 - 18;
-//			
-//			
-//			if (initial_y < 16)
-//				initial_y = 16;
-//			else if (initial_y > FP.screen.height - 16)
-//				initial_y = FP.screen.height - 16;
-//			
-//
-//			
-//			amp_y += MyWorld.norm() * 48 - 24;
-//			
-//			if (amp_y >= FP.screen.height * .5)
-//				amp_y = FP.screen.height * .5;
-//			else if (amp_y < 0)
-//				amp_y = 0;
-//			
-//
-//			if (subs_x == 4) {
-//				subs_x += -1 * int(Math.random() * 3);
-//			} else {
-//				subs_x += int(Math.random() * 3) - 1;
-//				if (subs_x > 4)
-//					subs_x = 4;
-//				else if (subs_x < 0)
-//					subs_x = 0;
-//			}
-//			
-//			if (subs_y == 4) {
-//				subs_y += -1 * int(Math.random() * 3);
-//			} else {
-//				subs_y += int(Math.random() * 3) - 1;
-//				if (subs_y > 4)
-//					subs_y = 4;
-//				else if (subs_y < 0)
-//					subs_y = 0;
-//			}
-//			
-//			if (Math.random() < .1)
-//				cos_x = !cos_x;
-//			if (Math.random() < .1)
-//				cos_y = !cos_y;
 		}
 		
 		public function clone():Creature {
