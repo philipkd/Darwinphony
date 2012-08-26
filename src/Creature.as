@@ -106,6 +106,12 @@ package
 			
 		}
 			
+		
+//		public override function render():void {
+//				Draw.rect(x + 8,y - 12,20,4,0x555555);
+//			super.render();
+//		}
+		
 		public function mutate():void {
 			var row:uint = frames.frame / frames.rows;
 			var col:uint = frames.frame % frames.columns;

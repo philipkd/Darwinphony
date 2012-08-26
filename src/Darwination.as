@@ -34,7 +34,7 @@ package
 			FP.screen.scale = 5;
 			FP.screen.color = 0x444644;
 			
-			shore = new Map(MAP_SHORE,CREATURES_SHORE, 72, 84);
+			shore = new Map(MAP_SHORE,CREATURES_SHORE, true);
 			forest = new Map(MAP_FOREST, CREATURES_FOREST)
 			tundra = new Map(MAP_TUNDRA, CREATURES_TUNDRA)
 			flowers = new Map(MAP_FLOWERS, CREATURES_FLOWERS)

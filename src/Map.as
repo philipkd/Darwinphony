@@ -20,15 +20,13 @@ package
 		
 		private var _map:*;
 		private var _creatures:*;
-		private var _initial_turtle_x:Number;
-		private var _initial_turtle_y:Number;
+		private var _beginner:Boolean;
 		
-		public function Map(map:*, creatures:*, initial_turtle_x:Number = -1, initial_turtle_y:Number = -1)
+		public function Map(map:*, creatures:*, beginner:Boolean = false)
 		{
 			_map = map;
 			_creatures = creatures;
-			_initial_turtle_x = initial_turtle_x;
-			_initial_turtle_y = initial_turtle_y;
+			_beginner = beginner;
 			
 			super();
 			current = this;			
@@ -46,7 +44,8 @@ package
 				darwin.y = 133;
 				add(darwin); 
 				
-				add(new Creature(_creatures, true)); 
+				var adam:Creature = new Creature(_creatures, true);
+				add(adam); 
 				
 				var finch:Finch = new Finch(Finch.FINCH_TYPE_INERT);
 				finch.x = 49;
@@ -63,13 +62,13 @@ package
 				turtle.y = 144;
 				add(turtle);
 				
-				add(new Spawner(Spawner.SPAWN_TYPE_CURSOR));
+				add(new Turtle(Turtle.TURTLE_TYPE_CURSOR));
 				
-				if (_initial_turtle_x != -1) {
-					var beginner:Turtle = new Turtle(Turtle.TURTLE_TYPE_LAND);
-					beginner.x = _initial_turtle_x;
-					beginner.y = _initial_turtle_y;
-					add(beginner);
+				if (_beginner) {
+					var guide:Turtle = new Turtle(Turtle.TURTLE_TYPE_LAND);
+					guide.x = adam.anchor_x - 20;
+					guide.y = adam.anchor_y + Math.random() * 20 - 10;
+					add(guide);
 				}
 			
 				add(new Trash);
