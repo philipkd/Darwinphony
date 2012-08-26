@@ -117,7 +117,7 @@ package
 
 			frames.frame = row * frames.columns + col;
 					
-			anchor_x += Map.norm() * 50 - 25;
+			anchor_x += Map.norm() * 20 - 10;
 
 			if (anchor_x < 20)
 				anchor_x = 20;

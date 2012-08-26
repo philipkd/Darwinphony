@@ -16,6 +16,7 @@ package
 		
 		private var img:Image;
 		private var text:Text;
+		private var spawn_cd:Number = 0;
 		
 		public function Spawner(spawn_type_value:int) {
 			spawn_type = spawn_type_value;
@@ -43,13 +44,18 @@ package
 		}
 		
 		public override function update():void {
-			if (spawn_type == SPAWN_TYPE_CURSOR) {
+			if (spawn_type == SPAWN_TYPE_CURSOR) {				
 				x = Input.mouseX;
 				y = Input.mouseY;
 				
+				if (spawn_cd < 0)
+					spawn_cd = 0;
+				if (spawn_cd > 0)
+					spawn_cd -= FP.elapsed;
+				
 				var baby:Creature;
 				
-				if (Input.mouseDown && !Map.current.menuHover() && Map.current.ready) {
+				if (Input.mouseDown && !Map.current.menuHover() && Map.current.ready && spawn_cd <= 0 ) {
 
 					var creatures:Array = new Array();
 					FP.world.getType('creature',creatures);
@@ -72,6 +78,8 @@ package
 					} else {
 						Map.current.reset();
 					}
+					
+					spawn_cd = .0625;
 					
 					img.alpha = 1;
 				} else {

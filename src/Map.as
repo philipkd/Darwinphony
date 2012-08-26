@@ -86,7 +86,7 @@ package
 				remove(creature);
 
 			var turtles:Array = new Array();
-			FP.world.getType('turtle',creatures);
+			FP.world.getType('turtle',turtles);
 			for each (var turtle:Turtle in turtles)
 				remove(turtle);
 			
