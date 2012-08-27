@@ -39,8 +39,8 @@ package
 			tundra = new Map(MAP_TUNDRA, CREATURES_TUNDRA)
 			flowers = new Map(MAP_FLOWERS, CREATURES_FLOWERS)
 						
-//			FP.world = new Title;
-			shore.select();
+			FP.world = new Title;
+//			shore.select();
 			
 			current = this;
 			

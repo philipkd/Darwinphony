@@ -121,8 +121,6 @@ package
 			
 			cos_y = true;
 			
-			frames.frame = 15;
-			amp_y = 25;			
 			
 		}
 			
