@@ -59,11 +59,34 @@ package
 		}
 		
 		
+		private function update_circles():void {
+			
+			if (kid_cd > 0) {
+				kid_cd -= FP.elapsed;
+				circles.frame = 0;
+			}
+			if (dad_cd > 0) {
+				dad_cd -= FP.elapsed;
+				circles.frame = 2;
+			}
+			if (mom_cd > 0) {
+				mom_cd -= FP.elapsed;
+				circles.frame = 1;
+			}
+			
+			circles.visible = (dad_cd > 0) || (mom_cd > 0) || (kid_cd > 0);
+			
+			
+		}
+		
 		public override function update():void {
+		
+			update_circles();
 			
 			timer += FP.elapsed;			
 			if (timer > cycle_length)
 				timer -= cycle_length;
+					
 
 			if (cos_x)
 				x = amp_x * Math.cos(2 * Math.PI * (timer / cycle_length) * subs_x) + anchor_x; 
@@ -86,7 +109,7 @@ package
 			anchor_y = FP.screen.height * .5;
 			
 			frames.frame = Math.random() * frames.frameCount;
-			
+						
 			amp_x = 0;
 			if (Math.random() < .5)
 				amp_y = 50;
@@ -98,28 +121,12 @@ package
 			
 			cos_y = true;
 			
+			frames.frame = 15;
+			amp_y = 25;			
+			
 		}
 			
-		
-		public override function render():void {
-			if (kid_cd > 0) {
-				kid_cd -= FP.elapsed;
-				circles.frame = 0;
-			}
-			if (dad_cd > 0) {
-				dad_cd -= FP.elapsed;
-				circles.frame = 2;
-			}
-			if (mom_cd > 0) {
-				mom_cd -= FP.elapsed;
-				circles.frame = 1;
-			}
-			
-			circles.visible = (dad_cd > 0) || (mom_cd > 0) || (kid_cd > 0);
-			
-			super.render();
-		}
-		
+				
 		public function mutate():void {
 			var row:uint = frames.frame / frames.rows;
 			var col:uint = frames.frame % frames.columns;
