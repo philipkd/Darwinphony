@@ -31,7 +31,8 @@ package
 			img.y = -3
 		
 			if (finch_type == FINCH_TYPE_CURSOR) {
-				mask = new Hitbox(6,4,-3,-2);
+				mask = new Pixelmask(FINCH,img.x,img.y);
+				
 				img.alpha = .5;
 				type = 'cursor';
 				x = Input.mouseX;
@@ -63,15 +64,19 @@ package
 					if (creatures.length > 0) {
 						for each (var c:Creature in creatures) {
 							c.kill();
+							Notes.shared().play_tap();
 						}
 					}
 	
 					var turtles:Array = new Array();
 					collideInto('turtle',x,y,turtles);
 					
-					if (turtles.length > 0)
-						for each (var t:Turtle in turtles)
+					if (turtles.length > 0) {
+						for each (var t:Turtle in turtles) {
 							t.kill();
+							Notes.shared().play_tap();
+						}
+					}
 					img.alpha = 1;
 				} else {
 					img.alpha = .5;

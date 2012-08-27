@@ -524,12 +524,69 @@ package
 		[Embed(source = 'assets/harps/harp16.mp3')] private const HARP_16_15:Class;
 		[Embed(source = 'assets/harps/harp16.mp3')] private const HARP_16_16:Class;
 		
+		[Embed(source = 'assets/beat.mp3')] private const BEAT_1:Class;
+		[Embed(source = 'assets/beat.mp3')] private const BEAT_2:Class;
+		[Embed(source = 'assets/beat.mp3')] private const BEAT_3:Class;
+		[Embed(source = 'assets/beat.mp3')] private const BEAT_4:Class;
+		[Embed(source = 'assets/beat.mp3')] private const BEAT_5:Class;
+		[Embed(source = 'assets/beat.mp3')] private const BEAT_6:Class;
+		[Embed(source = 'assets/beat.mp3')] private const BEAT_7:Class;
+		[Embed(source = 'assets/beat.mp3')] private const BEAT_8:Class;
+		[Embed(source = 'assets/beat.mp3')] private const BEAT_9:Class;
+		[Embed(source = 'assets/beat.mp3')] private const BEAT_10:Class;
+		[Embed(source = 'assets/beat.mp3')] private const BEAT_11:Class;
+		[Embed(source = 'assets/beat.mp3')] private const BEAT_12:Class;
+		[Embed(source = 'assets/beat.mp3')] private const BEAT_13:Class;
+		[Embed(source = 'assets/beat.mp3')] private const BEAT_14:Class;
+		[Embed(source = 'assets/beat.mp3')] private const BEAT_15:Class;
+		[Embed(source = 'assets/beat.mp3')] private const BEAT_16:Class;
+
+		[Embed(source = 'assets/drum.mp3')] private const DRUM_1:Class;
+		[Embed(source = 'assets/drum.mp3')] private const DRUM_2:Class;
+		[Embed(source = 'assets/drum.mp3')] private const DRUM_3:Class;
+		[Embed(source = 'assets/drum.mp3')] private const DRUM_4:Class;
+		[Embed(source = 'assets/drum.mp3')] private const DRUM_5:Class;
+		[Embed(source = 'assets/drum.mp3')] private const DRUM_6:Class;
+		[Embed(source = 'assets/drum.mp3')] private const DRUM_7:Class;
+		[Embed(source = 'assets/drum.mp3')] private const DRUM_8:Class;
+		[Embed(source = 'assets/drum.mp3')] private const DRUM_9:Class;
+		[Embed(source = 'assets/drum.mp3')] private const DRUM_10:Class;
+		[Embed(source = 'assets/drum.mp3')] private const DRUM_11:Class;
+		[Embed(source = 'assets/drum.mp3')] private const DRUM_12:Class;
+		[Embed(source = 'assets/drum.mp3')] private const DRUM_13:Class;
+		[Embed(source = 'assets/drum.mp3')] private const DRUM_14:Class;
+		[Embed(source = 'assets/drum.mp3')] private const DRUM_15:Class;
+		[Embed(source = 'assets/drum.mp3')] private const DRUM_16:Class;
+
+		[Embed(source = 'assets/tap.mp3')] private const TAP_1:Class;
+		[Embed(source = 'assets/tap.mp3')] private const TAP_2:Class;
+		[Embed(source = 'assets/tap.mp3')] private const TAP_3:Class;
+		[Embed(source = 'assets/tap.mp3')] private const TAP_4:Class;
+		[Embed(source = 'assets/tap.mp3')] private const TAP_5:Class;
+		[Embed(source = 'assets/tap.mp3')] private const TAP_6:Class;
+		[Embed(source = 'assets/tap.mp3')] private const TAP_7:Class;
+		[Embed(source = 'assets/tap.mp3')] private const TAP_8:Class;
+		[Embed(source = 'assets/tap.mp3')] private const TAP_9:Class;
+		[Embed(source = 'assets/tap.mp3')] private const TAP_10:Class;
+		[Embed(source = 'assets/tap.mp3')] private const TAP_11:Class;
+		[Embed(source = 'assets/tap.mp3')] private const TAP_12:Class;
+		[Embed(source = 'assets/tap.mp3')] private const TAP_13:Class;
+		[Embed(source = 'assets/tap.mp3')] private const TAP_14:Class;
+		[Embed(source = 'assets/tap.mp3')] private const TAP_15:Class;
+		[Embed(source = 'assets/tap.mp3')] private const TAP_16:Class;
+
+		
+		private static const nps:Number = 8;			
+
+		private static var _shared:Notes = null;
+		
 		private var tones:Array = new Array(16);
 		private var harps:Array = new Array(16);
+		private var tap:Array = new Array(16);
+		private var drum:Array = new Array(16);
+		private var beat:Array = new Array(16);
 		
 		private var timer:Number = 0;
-		
-		private static var _shared:Notes = null;
 		
 		public static function shared():Notes {
 			if (!_shared)
@@ -1060,12 +1117,70 @@ package
 			harps[15][12] = new Sfx(HARP_16_13);
 			harps[15][13] = new Sfx(HARP_16_14);
 			harps[15][14] = new Sfx(HARP_16_15);
-			harps[15][15] = new Sfx(HARP_16_16);			
+			harps[15][15] = new Sfx(HARP_16_16);
+			
+			tap[0] = new Sfx(TAP_1);
+			tap[1] = new Sfx(TAP_2);
+			tap[2] = new Sfx(TAP_3);
+			tap[3] = new Sfx(TAP_4);
+			tap[4] = new Sfx(TAP_5);
+			tap[5] = new Sfx(TAP_6);
+			tap[6] = new Sfx(TAP_7);
+			tap[7] = new Sfx(TAP_8);
+			tap[8] = new Sfx(TAP_9);
+			tap[9] = new Sfx(TAP_10);
+			tap[10] = new Sfx(TAP_11);
+			tap[11] = new Sfx(TAP_12);
+			tap[12] = new Sfx(TAP_13);
+			tap[13] = new Sfx(TAP_14);
+			tap[14] = new Sfx(TAP_15);
+			tap[15] = new Sfx(TAP_16);
+
+			beat[0] = new Sfx(BEAT_1);
+			beat[1] = new Sfx(BEAT_2);
+			beat[2] = new Sfx(BEAT_3);
+			beat[3] = new Sfx(BEAT_4);
+			beat[4] = new Sfx(BEAT_5);
+			beat[5] = new Sfx(BEAT_6);
+			beat[6] = new Sfx(BEAT_7);
+			beat[7] = new Sfx(BEAT_8);
+			beat[8] = new Sfx(BEAT_9);
+			beat[9] = new Sfx(BEAT_10);
+			beat[10] = new Sfx(BEAT_11);
+			beat[11] = new Sfx(BEAT_12);
+			beat[12] = new Sfx(BEAT_13);
+			beat[13] = new Sfx(BEAT_14);
+			beat[14] = new Sfx(BEAT_15);
+			beat[15] = new Sfx(BEAT_16);
+			
+			drum[0] = new Sfx(DRUM_1);
+			drum[1] = new Sfx(DRUM_2);
+			drum[2] = new Sfx(DRUM_3);
+			drum[3] = new Sfx(DRUM_4);
+			drum[4] = new Sfx(DRUM_5);
+			drum[5] = new Sfx(DRUM_6);
+			drum[6] = new Sfx(DRUM_7);
+			drum[7] = new Sfx(DRUM_8);
+			drum[8] = new Sfx(DRUM_9);
+			drum[9] = new Sfx(DRUM_10);
+			drum[10] = new Sfx(DRUM_11);
+			drum[11] = new Sfx(DRUM_12);
+			drum[12] = new Sfx(DRUM_13);
+			drum[13] = new Sfx(DRUM_14);
+			drum[14] = new Sfx(DRUM_15);
+			drum[15] = new Sfx(DRUM_16);
+			
+
 		}
 		
 		private function play(notes:Array, note:uint):void {
-			const tps:Number = 8;			
-			var snd:Sfx = notes[note][int(timer * tps)];
+			var snd:Sfx = notes[note][int(timer * nps)];
+			if (!snd.playing)
+				snd.play();
+		}
+		
+		private function play_percussion(note:Array):void {
+			var snd:Sfx = note[int(timer * nps)];
 			if (!snd.playing)
 				snd.play();
 		}
@@ -1076,6 +1191,18 @@ package
 
 		public function play_harp(note:uint):void {
 			play(harps,note);
+		}
+		
+		public function play_drum():void {
+			play_percussion(drum);
+		}
+		
+		public function play_beat():void {
+			play_percussion(beat);
+		}
+		
+		public function play_tap():void {
+			play_percussion(tap);
 		}
 		
 		

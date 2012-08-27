@@ -32,8 +32,6 @@ package
 		private static const cycle_length:Number = 8;
 
 		private var timer:Number = 0;
-		private var mute_tone_cd:Number = 0;		
-		private var mute_harp_cd:Number = 0;		
 		private var _sprites:*;
 	
 		
@@ -60,33 +58,8 @@ package
 			super(x, y, graphic, mask);			
 		}
 		
-		public function mute_tone():void {
-			mute_tone_cd = .25;
-		}
-		
-		public function mute_harp():void {
-			mute_harp_cd = .25;
-		}
-
-		
-		public function tone_muted():Boolean {
-			return mute_tone_cd > 0;
-		}
-
-		public function harp_muted():Boolean {
-			return mute_harp_cd > 0;
-		}
-		
-		private function update_cooldowns():void {
-			if (mute_tone_cd > 0)
-				mute_tone_cd -= FP.elapsed;
-			if (mute_harp_cd > 0)
-				mute_harp_cd -= FP.elapsed;
-		}
 		
 		public override function update():void {
-			
-			update_cooldowns();
 			
 			timer += FP.elapsed;			
 			if (timer > cycle_length)

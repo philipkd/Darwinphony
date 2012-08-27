@@ -88,6 +88,8 @@ package
 						Map.current.reset();
 					}
 					
+					Notes.shared().play_drum();					
+					
 					spawn_cd = .0625;
 					
 					img.alpha = 1;

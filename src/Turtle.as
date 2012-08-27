@@ -24,6 +24,8 @@ package
 		private var timer:Number = 0;
 		private var img:Image;
 		private var text:Text;
+		
+		private var ignore:Array;
 			
 		public function Turtle(turtle_type_value:int)
 		{			
@@ -56,7 +58,7 @@ package
 				graphic = new Graphiclist(text, img);
 			}
 			
-			
+			ignore = new Array();
 			mask = new Pixelmask(TURTLE, img.x, img.y);
 			
 			super(x, y, graphic, mask);
@@ -83,19 +85,24 @@ package
 				
 				if (creatures.length > 0) {
 					for each (var c:Creature in creatures) {
-						if (c.amp_y > 30 && !c.tone_muted()) {
-							Notes.shared().play_tone(c.frames.frame);
-							c.mute_tone();
-						} else if (!c.harp_muted()) {
-							Notes.shared().play_harp(c.frames.frame);
-							c.mute_harp();
-							
+						if (ignore.indexOf(c) < 0) {
+							if (c.amp_y > 30)
+								Notes.shared().play_tone(c.frames.frame);
+							else
+								Notes.shared().play_harp(c.frames.frame);
+								
+							ignore.push(c);
 						}
-						
 					}
 					img.alpha = 1;
 				} else {
 					img.alpha = .5; 
+				}
+				
+				
+				for (var i:int = ignore.length - 1; i >= 0; i--) {
+					if (!collideWith(ignore[i],x,y))
+						ignore.splice(i,1);
 				}
 				
 			}
@@ -116,6 +123,7 @@ package
 				
 				if (Input.mousePressed && !Map.current.menuHover() && Map.current.ready) {
 					drop_copy();
+					Notes.shared().play_beat();
 				}
 				
 				x = Input.mouseX;
